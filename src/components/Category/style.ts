@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useStyles = makeStyles()((theme) => {
+export const useStyles = makeStyles()(() => {
   return {
     categoryContainer: {
       height: "100%",
@@ -14,6 +14,8 @@ export const useStyles = makeStyles()((theme) => {
     },
     search: {
       border: "1px solid #DCE0E5",
+      padding: "5px 8px",
+      fontSize: 14,
     },
   };
 });

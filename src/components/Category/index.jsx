@@ -1,7 +1,7 @@
 import React from "react";
 import { useStyles } from "./style.ts";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2.js";
-import { Input } from "@mui/material";
+import SearchCategory from "../SearchCategory/index.tsx";
 
 const Category = () => {
   const { classes } = useStyles();
@@ -9,7 +9,9 @@ const Category = () => {
     <Grid2 className={classes.categoryContainer}>
       <div className={classes.categoryBox}>
         <h2>Category</h2>
-        <Input disableUnderline={true} className={classes.search} />
+        <div>
+          <SearchCategory />
+        </div>
       </div>
     </Grid2>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useStyles } from "./style.ts";
+import { useStyles } from "./style";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Button, Input } from "@mui/material";
 
@@ -11,7 +11,7 @@ const SearchCategory = (props: Props) => {
   const [newCategory, setNewCategory] = useState("");
   const { classes, cx } = useStyles();
 
-  const handleAddNewCategory = (e) => {
+  const handleAddNewCategory = (e: any) => {
     setNewCategory(e.target.value);
   };
 

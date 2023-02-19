@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useStyles } from "./style.ts";
+import { useStyles } from "./style";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2.js";
 import SearchCategory from "../SearchCategory/index.tsx";
 import CategoryTable from "../CategoryTable/index.tsx";
 
 const Category = () => {
   const { classes } = useStyles();
-  const [categoryList, setCategoryList] = useState();
+  const [categoryList, setCategoryList] = useState("");
 
   console.log(categoryList);
 

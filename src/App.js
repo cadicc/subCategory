@@ -1,4 +1,4 @@
-import Category from "./components/Category";
+import Category from "./components/Category/index.tsx";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
-import { useStyles } from "./style.ts";
+import { useStyles } from "./style";
 
 const CategoryTable = () => {
   const { classes } = useStyles();

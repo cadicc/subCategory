@@ -1,7 +1,11 @@
-import "./App.css";
+import Category from "./components/Category";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Category />
+    </>
+  );
 }
 
 export default App;

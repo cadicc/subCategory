@@ -5,6 +5,7 @@ export const useStyles = makeStyles()((theme) => {
     search: {
       border: "1px solid #DCE0E5",
       padding: "5px 8px",
+      fontFamily: "Manrope",
       fontSize: 14,
     },
     searchLine: {
@@ -31,6 +32,7 @@ export const useStyles = makeStyles()((theme) => {
       color: "#FFFFFF",
       textTransform: "capitalize",
       padding: "0px 18px",
+      fontFamily: "Manrope",
       "&:hover": {
         backgroundColor: "#28817b",
       },

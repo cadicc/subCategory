@@ -1,9 +1,9 @@
-import Category from "./components/Category/index.tsx";
+import CategoryContainer from "./components/Category/index.tsx";
 
 function App() {
   return (
     <>
-      <Category />
+      <CategoryContainer />
     </>
   );
 }

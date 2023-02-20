@@ -9,14 +9,17 @@ interface Props {
 
 const SearchCategory = (props: Props) => {
   const [newCategory, setNewCategory] = useState("");
+  const [searchNewCategory, setSearchNewCategory] = useState("");
   const { classes, cx } = useStyles();
 
   const handleAddNewCategory = (e: any) => {
     setNewCategory(e.target.value);
+    setSearchNewCategory(e.target.value);
   };
 
   const handleAddCategory = () => {
     props.setCategory(newCategory);
+    setSearchNewCategory("");
   };
 
   return (
@@ -30,6 +33,7 @@ const SearchCategory = (props: Props) => {
               classes.searchNewCategory,
               classes.noBorderRight
             )}
+            value={searchNewCategory}
             placeholder="Add new category item"
             onChange={(e) => handleAddNewCategory(e)}
           />

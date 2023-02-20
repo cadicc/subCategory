@@ -16,5 +16,6 @@ export const useStyles = makeStyles()(() => {
         width: "30%",
       },
     },
+    productColumn: { width: "30%" },
   };
 });

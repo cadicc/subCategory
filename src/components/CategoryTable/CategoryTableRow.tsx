@@ -10,6 +10,9 @@ import Minus from "../../icons/minus";
 import Plus from "../../icons/plus";
 import { Category } from "../../entities/Category";
 import { useStyles } from "./style";
+import { Item } from "../../entities/Item";
+import { SubList } from "../../entities/SubList";
+import { SubCategory } from "../../entities/SubCategory";
 
 interface Props {
   categories: Category[];
@@ -20,13 +23,16 @@ const CategoryTableRow = (props: Props) => {
 
   const { classes } = useStyles();
 
-  const handleExpand = (e: any, category: Category) => {
+  const handleExpand = (
+    e: any,
+    category: Category | Item | SubList | SubCategory
+  ) => {
     if (open.find((id: string) => id === category.id)) {
       setOpen(open.filter((id: string) => id !== category.id));
     } else {
       setOpen([...open, category.id || ""]);
     }
-    console.log(category.id);
+    console.log(category);
   };
   return (
     <>
@@ -65,6 +71,7 @@ const CategoryTableRow = (props: Props) => {
                   in={open.find((id: string | undefined) => id === category.id)}
                   timeout="auto"
                   unmountOnExit
+                  key={subCategory.id}
                 >
                   <List component="div" disablePadding>
                     <ListItemButton
@@ -91,17 +98,51 @@ const CategoryTableRow = (props: Props) => {
                           )}
                           timeout="auto"
                           unmountOnExit
+                          key={subList.id}
                         >
                           <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 8 }}>
+                            <ListItemButton
+                              sx={{ pl: 8 }}
+                              onClick={(e) => handleExpand(e, subList)}
+                            >
                               <ListItemIcon>
-                                <Plus />
+                                {open.find(
+                                  (id: string) => id === subList.id
+                                ) ? (
+                                  <Minus />
+                                ) : (
+                                  <Plus />
+                                )}
                               </ListItemIcon>
                               <ListItemText primary={subList.category_name} />
                               <p className={classes.productColumn}>
                                 {subList.product_count}
                               </p>
                             </ListItemButton>
+                            {subList.items ? (
+                              subList.items.map((item) => (
+                                <Collapse
+                                  in={open.find(
+                                    (id: string | undefined) =>
+                                      id === subList.id
+                                  )}
+                                  timeout="auto"
+                                  unmountOnExit
+                                  key={item.id}
+                                >
+                                  <List component="div" disablePadding>
+                                    <ListItemButton sx={{ pl: 18 }}>
+                                      <ListItemText primary={item.item_name} />
+                                      <p className={classes.productColumn}>
+                                        {item.items_count}
+                                      </p>
+                                    </ListItemButton>
+                                  </List>
+                                </Collapse>
+                              ))
+                            ) : (
+                              <></>
+                            )}
                           </List>
                         </Collapse>
                       ))

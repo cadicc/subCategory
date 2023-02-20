@@ -11,6 +11,8 @@ interface Props {
 const CategoryTable = (props: Props) => {
   const { classes } = useStyles();
 
+  console.log(props.categories);
+
   return (
     <Grid2>
       <div className={classes.tableHeader}>

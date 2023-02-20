@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# FE Training no.1
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Create categories for training
 
 ## Available Scripts
 

@@ -116,14 +116,16 @@ const CategoryTableRow = (props: Props) => {
           >
             {category.category_level === "parent" ? (
               <ListItemButton onClick={(e) => handleExpand(e, category)}>
-                <ListItemIcon>
-                  {open.find((id: string) => id === category.id) ? (
-                    <Minus />
-                  ) : (
-                    <Plus />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={category.category_name} />
+                <div className={classes.categoryParentRow}>
+                  <ListItemIcon>
+                    {open.find((id: string) => id === category.id) ? (
+                      <Minus />
+                    ) : (
+                      <Plus />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={category.category_name} />
+                </div>
                 <p className={classes.productColumn}>
                   {category.product_count}
                 </p>

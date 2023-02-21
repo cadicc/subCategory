@@ -17,5 +17,10 @@ export const useStyles = makeStyles()(() => {
       },
     },
     productColumn: {},
+    categoryParentRow: {
+      width: "70%",
+      display: "flex",
+      alignItems: "center",
+    },
   };
 });

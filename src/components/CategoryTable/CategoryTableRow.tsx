@@ -57,10 +57,7 @@ const CategoryTableRow = (props: Props) => {
       } else if (category.category_level === "subcategory") {
         return props.setCategorySelected(
           props.categorySelected.filter(
-            (categorySelected) =>
-              categorySelected.category_level !== "subcategory" &&
-              categorySelected.category_level !== "sublist" &&
-              categorySelected.category_level !== "item"
+            (categorySelected) => categorySelected.category_level === "parent"
           )
         );
       } else if (category.category_level === "parent") {

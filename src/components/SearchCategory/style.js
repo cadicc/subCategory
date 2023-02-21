@@ -16,6 +16,7 @@ export const useStyles = makeStyles()((theme) => {
     },
     searchCategory: {
       width: "calc(100% - 80px)",
+      display: "flex",
     },
     searchNewCategory: {
       width: "25%",
@@ -35,6 +36,24 @@ export const useStyles = makeStyles()((theme) => {
       fontFamily: "Manrope",
       "&:hover": {
         backgroundColor: "#28817b",
+      },
+    },
+    breadcrumbs: {
+      border: "1px solid #DCE0E5",
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: 5,
+    },
+    noBorder: {
+      borderWidth: 0,
+    },
+    breadcrumbsBtn: {
+      textTransform: "capitalize",
+      padding: "4px 10px",
+      backgroundColor: "#DCE0E5",
+      color: "#2F353D",
+      "&:hover": {
+        backgroundColor: "#CDE3FF",
       },
     },
   };

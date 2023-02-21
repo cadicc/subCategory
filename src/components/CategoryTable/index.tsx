@@ -6,12 +6,12 @@ import { useStyles } from "./style";
 
 interface Props {
   categories: Category[];
+  setCategorySelected: (categorySelected: any) => void;
+  categorySelected: Category[];
 }
 
 const CategoryTable = (props: Props) => {
   const { classes } = useStyles();
-
-  console.log(props.categories);
 
   return (
     <Grid2>
@@ -20,7 +20,11 @@ const CategoryTable = (props: Props) => {
         <span>Products</span>
       </div>
       <div>
-        <CategoryTableRow categories={props.categories} />
+        <CategoryTableRow
+          categories={props.categories}
+          categorySelected={props.categorySelected}
+          setCategorySelected={props.setCategorySelected}
+        />
       </div>
     </Grid2>
   );

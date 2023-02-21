@@ -16,6 +16,8 @@ import { SubCategory } from "../../entities/SubCategory";
 
 interface Props {
   categories: Category[];
+  categorySelected: Category[];
+  setCategorySelected: (categorySelected: any) => void;
 }
 
 const CategoryTableRow = (props: Props) => {
@@ -23,16 +25,34 @@ const CategoryTableRow = (props: Props) => {
 
   const { classes } = useStyles();
 
-  const handleExpand = (
-    e: any,
-    category: Category | Item | SubList | SubCategory
-  ) => {
+  const handleExpand = (e: any, category: Category | SubList | SubCategory) => {
     if (open.find((id: string) => id === category.id)) {
       setOpen(open.filter((id: string) => id !== category.id));
     } else {
       setOpen([...open, category.id || ""]);
     }
-    console.log(category);
+    if (
+      props.categorySelected.find(
+        (categorySelected) =>
+          categorySelected.id === category.id &&
+          categorySelected.category_level === category.category_level
+      )
+    ) {
+      props.setCategorySelected(
+        props.categorySelected.filter(
+          (categorySelected) => categorySelected.id !== category.id
+        )
+      );
+    } else {
+      props.setCategorySelected([
+        ...props.categorySelected,
+        {
+          id: category.id || "",
+          category_name: category.category_name || "",
+          category_level: category.category_level || "",
+        },
+      ]);
+    }
   };
   return (
     <>

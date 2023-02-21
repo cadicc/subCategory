@@ -52,6 +52,7 @@ export const useStyles = makeStyles()((theme) => {
       padding: "4px 10px",
       backgroundColor: "#DCE0E5",
       color: "#2F353D",
+      boxShadow: "none",
       "&:hover": {
         backgroundColor: "#CDE3FF",
       },

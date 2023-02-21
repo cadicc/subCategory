@@ -6,16 +6,12 @@ import { Category } from "../../entities/Category";
 
 interface Props {
   setCategory: (value: string) => any;
-  categorySelected: Category[];
-  categories: Category[];
+  categorySelected: any[];
 }
 
 const SearchCategory = (props: Props) => {
   const [newCategory, setNewCategory] = useState("");
   const [searchNewCategory, setSearchNewCategory] = useState("");
-  const [parentCategory, setParentCategory] = useState<any>({});
-  const [subCategory, setSubCategory] = useState<any>({});
-  const [subListCategory, setSubListCategory] = useState<any>({});
   const { classes, cx } = useStyles();
 
   const handleAddNewCategory = (e: any) => {
@@ -27,62 +23,6 @@ const SearchCategory = (props: Props) => {
     props.setCategory(newCategory);
     setSearchNewCategory("");
   };
-
-  useEffect(() => {
-    if (
-      props.categorySelected &&
-      props.categorySelected.find(
-        (categorySelected) =>
-          categorySelected.category_level &&
-          categorySelected.category_level === "parent"
-      )
-    ) {
-      setParentCategory(
-        props.categorySelected.find(
-          (categorySelected) => categorySelected.category_level === "parent"
-        )
-      );
-    } else {
-      setParentCategory({});
-    }
-
-    if (
-      props.categorySelected &&
-      props.categorySelected.find(
-        (categorySelected) =>
-          categorySelected.category_level &&
-          categorySelected.category_level === "subcategory"
-      )
-    ) {
-      setSubCategory(
-        props.categorySelected.find(
-          (categorySelected) =>
-            categorySelected.category_level === "subcategory"
-        )
-      );
-    } else {
-      setSubCategory({});
-    }
-
-    if (
-      props.categorySelected &&
-      props.categorySelected.find(
-        (categorySelected) =>
-          categorySelected.category_level &&
-          categorySelected.category_level === "sublist"
-      )
-    ) {
-      setSubListCategory(
-        props.categorySelected.find(
-          (categorySelected) => categorySelected.category_level === "sublist"
-        )
-      );
-    } else {
-      setSubListCategory({});
-    }
-  }, [props.categorySelected]);
-
-  console.log(props.categorySelected);
 
   return (
     <Grid2>
@@ -104,37 +44,60 @@ const SearchCategory = (props: Props) => {
               className={cx(classes.searchParentCategory, classes.breadcrumbs)}
             >
               <Breadcrumbs separator="/" aria-label="breadcrumb">
-                {parentCategory.id ? (
-                  <Button
-                    variant="contained"
-                    className={classes.breadcrumbsBtn}
-                  >
-                    {parentCategory.category_name}
-                  </Button>
-                ) : (
-                  <></>
-                )}
-                {parentCategory.id && subCategory.id && (
-                  <Button
-                    variant="contained"
-                    className={classes.breadcrumbsBtn}
-                  >
-                    {subCategory.category_name}
-                  </Button>
-                )}
-                {parentCategory.id && subCategory.id && subListCategory.id && (
-                  <Button
-                    variant="contained"
-                    className={classes.breadcrumbsBtn}
-                  >
-                    {subListCategory.category_name}
-                  </Button>
-                )}
+                {props.categorySelected &&
+                  props.categorySelected.map((categorySelected) => {
+                    if (categorySelected.category_level === "parent") {
+                      return (
+                        <Button
+                          variant="contained"
+                          className={classes.breadcrumbsBtn}
+                        >
+                          {categorySelected.category_name}
+                        </Button>
+                      );
+                    }
+                    if (categorySelected.category_level === "subcategory") {
+                      return (
+                        <Button
+                          variant="contained"
+                          className={classes.breadcrumbsBtn}
+                        >
+                          {categorySelected.category_name}
+                        </Button>
+                      );
+                    }
+                    if (categorySelected.category_level === "sublist") {
+                      return (
+                        <Button
+                          variant="contained"
+                          className={classes.breadcrumbsBtn}
+                        >
+                          {categorySelected.category_name}
+                        </Button>
+                      );
+                    }
+                    if (categorySelected.category_level === "item") {
+                      return (
+                        <Button
+                          variant="contained"
+                          className={classes.breadcrumbsBtn}
+                        >
+                          {categorySelected.item_name}
+                        </Button>
+                      );
+                    }
+                  })}
               </Breadcrumbs>
-              <Input
-                disableUnderline={true}
-                className={cx(classes.search, classes.noBorder)}
-              />
+              {!props.categorySelected.find(
+                (selected) => selected.item_name
+              ) ? (
+                <Input
+                  disableUnderline={true}
+                  className={cx(classes.search, classes.noBorder)}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           ) : (
             <Input

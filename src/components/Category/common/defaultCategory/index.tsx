@@ -21,21 +21,25 @@ export const defaultCategory = [
             items: [
               {
                 item_name: "Category item 1",
+                category_level: "item",
                 items_count: "25",
                 id: createId(30),
               },
               {
                 item_name: "Category item 2",
+                category_level: "item",
                 items_count: "22",
                 id: createId(30),
               },
               {
                 item_name: "Category item 3",
+                category_level: "item",
                 items_count: "23",
                 id: createId(30),
               },
               {
                 item_name: "Category item 4",
+                category_level: "item",
                 items_count: "24",
                 id: createId(30),
               },
@@ -49,21 +53,25 @@ export const defaultCategory = [
             items: [
               {
                 item_name: "Category item 1",
+                category_level: "item",
                 items_count: "11",
                 id: createId(30),
               },
               {
                 item_name: "Category item 2",
+                category_level: "item",
                 items_count: "12",
                 id: createId(30),
               },
               {
                 item_name: "Category item 3",
+                category_level: "item",
                 items_count: "13",
                 id: createId(30),
               },
               {
                 item_name: "Category item 4",
+                category_level: "item",
                 items_count: "14",
                 id: createId(30),
               },

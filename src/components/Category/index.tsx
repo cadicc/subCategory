@@ -18,7 +18,6 @@ const CategoryContainer = () => {
         <h2>Category</h2>
         <div>
           <SearchCategory
-            categories={category}
             setCategory={setCategoryList}
             categorySelected={categorySelected}
           />

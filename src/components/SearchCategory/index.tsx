@@ -7,6 +7,7 @@ import { Category } from "../../entities/Category";
 interface Props {
   setCategory: (value: string) => any;
   categorySelected: any[];
+  categories: Category[];
 }
 
 const SearchCategory = (props: Props) => {
@@ -14,12 +15,30 @@ const SearchCategory = (props: Props) => {
   const [searchNewCategory, setSearchNewCategory] = useState("");
   const { classes, cx } = useStyles();
 
+  const { categorySelected } = props;
+
   const handleAddNewCategory = (e: any) => {
     setNewCategory(e.target.value);
     setSearchNewCategory(e.target.value);
   };
 
   const handleAddCategory = () => {
+    if (
+      categorySelected[categorySelected.length - 1].category_level === "sublist"
+    ) {
+      console.log(categorySelected);
+      console.log(props.categories);
+      console.log(
+        [...props.categories.map(
+          (category) =>
+            category.category_level === categorySelected[0].category_level &&
+            category.id === categorySelected[0].id &&
+            category.sub_category
+        )]
+      );
+      console.log(searchNewCategory);
+    }
+
     props.setCategory(newCategory);
     setSearchNewCategory("");
   };
@@ -39,13 +58,13 @@ const SearchCategory = (props: Props) => {
             placeholder="Add new category item"
             onChange={(e) => handleAddNewCategory(e)}
           />
-          {props.categorySelected.length > 0 ? (
+          {categorySelected.length > 0 ? (
             <div
               className={cx(classes.searchParentCategory, classes.breadcrumbs)}
             >
               <Breadcrumbs separator="/" aria-label="breadcrumb">
-                {props.categorySelected &&
-                  props.categorySelected.map((categorySelected) => {
+                {categorySelected &&
+                  categorySelected.map((categorySelected, index) => {
                     if (categorySelected.category_level === "parent") {
                       return (
                         <Button
@@ -88,9 +107,7 @@ const SearchCategory = (props: Props) => {
                     }
                   })}
               </Breadcrumbs>
-              {!props.categorySelected.find(
-                (selected) => selected.item_name
-              ) ? (
+              {!categorySelected.find((selected) => selected.item_name) ? (
                 <Input
                   disableUnderline={true}
                   className={cx(classes.search, classes.noBorder)}

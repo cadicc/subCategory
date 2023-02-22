@@ -61,15 +61,7 @@ const CategoryTableRow = (props: Props) => {
           )
         );
       } else if (category.category_level === "parent") {
-        return props.setCategorySelected(
-          props.categorySelected.filter(
-            (categorySelected) =>
-              categorySelected.category_level !== "parent" &&
-              categorySelected.category_level !== "subcategory" &&
-              categorySelected.category_level !== "sublist" &&
-              categorySelected.category_level !== "item"
-          )
-        );
+        return props.setCategorySelected([]);
       }
       props.setCategorySelected(
         props.categorySelected.filter(
@@ -77,6 +69,20 @@ const CategoryTableRow = (props: Props) => {
         )
       );
     } else {
+      if (
+        props.categorySelected.find(
+          (cateSelected) => cateSelected.category_level === "item"
+        )
+      ) {
+        props.setCategorySelected(
+          props.categorySelected.map((categorySelected) =>
+            categorySelected.category_level === "item" &&
+            category.category_level === "item"
+              ? category
+              : categorySelected
+          )
+        );
+      }
       if (
         props.categorySelected.find(
           (cateSelected) =>
@@ -96,9 +102,6 @@ const CategoryTableRow = (props: Props) => {
       ]);
     }
   };
-
-  console.log(open);
-  console.log(props.categorySelected);
 
   return (
     <>
@@ -146,14 +149,16 @@ const CategoryTableRow = (props: Props) => {
                       sx={{ pl: 4 }}
                       onClick={(e) => handleExpand(e, subCategory)}
                     >
-                      <ListItemIcon>
-                        {open.find((id: string) => id === subCategory.id) ? (
-                          <Minus />
-                        ) : (
-                          <Plus />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={subCategory.category_name} />
+                      <div className={classes.subCategoryRow}>
+                        <ListItemIcon>
+                          {open.find((id: string) => id === subCategory.id) ? (
+                            <Minus />
+                          ) : (
+                            <Plus />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={subCategory.category_name} />
+                      </div>
                       <p className={classes.productColumn}>
                         {subCategory.product_count}
                       </p>
@@ -173,16 +178,18 @@ const CategoryTableRow = (props: Props) => {
                               sx={{ pl: 8 }}
                               onClick={(e) => handleExpand(e, subList)}
                             >
-                              <ListItemIcon>
-                                {open.find(
-                                  (id: string) => id === subList.id
-                                ) ? (
-                                  <Minus />
-                                ) : (
-                                  <Plus />
-                                )}
-                              </ListItemIcon>
-                              <ListItemText primary={subList.category_name} />
+                              <div className={classes.subListRow}>
+                                <ListItemIcon>
+                                  {open.find(
+                                    (id: string) => id === subList.id
+                                  ) ? (
+                                    <Minus />
+                                  ) : (
+                                    <Plus />
+                                  )}
+                                </ListItemIcon>
+                                <ListItemText primary={subList.category_name} />
+                              </div>
                               <p className={classes.productColumn}>
                                 {subList.product_count}
                               </p>
@@ -203,7 +210,11 @@ const CategoryTableRow = (props: Props) => {
                                       sx={{ pl: 18 }}
                                       onClick={(e) => handleExpand(e, item)}
                                     >
-                                      <ListItemText primary={item.item_name} />
+                                      <div className={classes.itemtRow}>
+                                        <ListItemText
+                                          primary={item.item_name}
+                                        />
+                                      </div>
                                       <p className={classes.productColumn}>
                                         {item.items_count}
                                       </p>

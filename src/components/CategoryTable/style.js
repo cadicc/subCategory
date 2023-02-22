@@ -22,5 +22,20 @@ export const useStyles = makeStyles()(() => {
       display: "flex",
       alignItems: "center",
     },
+    subCategoryRow: {
+      width: "calc(100% - 312px)",
+      display: "flex",
+      alignItems: "center",
+    },
+    subListRow: {
+      width: "calc(100% - 313px)",
+      display: "flex",
+      alignItems: "center",
+    },
+    itemtRow: {
+      width: "calc(100% - 311px)",
+      display: "flex",
+      alignItems: "center",
+    },
   };
 });

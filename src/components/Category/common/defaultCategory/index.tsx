@@ -79,6 +79,18 @@ export const defaultCategory = [
           },
         ],
       },
+      {
+        category_name: "Sub Category 2",
+        product_count: "39",
+        id: createId(30),
+        category_level: "subcategory",
+      },
     ],
+  },
+  {
+    category_name: "Main Category 2",
+    product_count: "20",
+    id: createId(30),
+    category_level: "parent",
   },
 ];

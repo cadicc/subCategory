@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useStyles } from "./style";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Breadcrumbs, Button, ButtonBase, Input } from "@mui/material";
+import { Breadcrumbs, Button, Input } from "@mui/material";
 import { Category } from "../../entities/Category";
+import { AddItem, AddSubList } from "./hook";
 
 interface Props {
-  setCategory: (value: string) => any;
+  setListCategory: (value: string) => any;
   categorySelected: any[];
   categories: Category[];
+  setCategory: (category: Category[]) => any;
 }
 
 const SearchCategory = (props: Props) => {
@@ -24,24 +26,29 @@ const SearchCategory = (props: Props) => {
 
   const handleAddCategory = () => {
     if (
-      categorySelected[categorySelected.length - 1].category_level === "sublist"
+      categorySelected[categorySelected.length - 1].category_level ===
+        "sublist" ||
+      categorySelected[categorySelected.length - 1].category_level === "item"
     ) {
-      console.log(categorySelected);
-      console.log(props.categories);
-      console.log(
-        [...props.categories.map(
-          (category) =>
-            category.category_level === categorySelected[0].category_level &&
-            category.id === categorySelected[0].id &&
-            category.sub_category
-        )]
+      props.setCategory(
+        AddItem(props.categories, categorySelected, searchNewCategory)
       );
-      console.log(searchNewCategory);
+    } else if (
+      categorySelected[categorySelected.length - 1].category_level ===
+      "subcategory"
+    ) {
+      props.setCategory(
+        AddSubList(props.categories, categorySelected, searchNewCategory)
+      );
     }
 
-    props.setCategory(newCategory);
+    console.log(categorySelected);
+
+    props.setListCategory(newCategory);
     setSearchNewCategory("");
   };
+
+  console.log(props.categories);
 
   return (
     <Grid2>

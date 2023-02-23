@@ -36,6 +36,12 @@ export const useStyles = makeStyles()(() => {
       width: "calc(100% - 311px)",
       display: "flex",
       alignItems: "center",
+      "& div:first-child": {
+        minWidth: 30,
+      },
+    },
+    categoryActived: {
+      backgroundColor: "#D2E6FF",
     },
   };
 });

@@ -1,5 +1,5 @@
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import React, { useState } from "react";
+import React from "react";
 import { Category } from "../../entities/Category";
 import CategoryTableRow from "./CategoryTableRow";
 import { useStyles } from "./style";

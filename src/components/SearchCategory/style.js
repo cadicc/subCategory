@@ -57,5 +57,13 @@ export const useStyles = makeStyles()((theme) => {
         backgroundColor: "#CDE3FF",
       },
     },
+    categoryActived: {
+      backgroundColor: "#D2E6FF",
+    },
+    btnActived: {
+      "& ol li:last-child button": {
+        backgroundColor: "#D2E6FF",
+      },
+    },
   };
 });

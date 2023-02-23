@@ -1,28 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useStyles } from "./style";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Breadcrumbs, Button, Input } from "@mui/material";
 import { Category } from "../../entities/Category";
-import { AddItem, AddSubList } from "./hook";
+import { AddItem, AddSubCategory, AddSubList } from "./hook";
+import { debounce } from "lodash";
+import { defaultCategory } from "../Category/common/defaultCategory";
 
 interface Props {
-  setListCategory: (value: string) => any;
   categorySelected: any[];
   categories: Category[];
   setCategory: (category: Category[]) => any;
 }
 
 const SearchCategory = (props: Props) => {
-  const [newCategory, setNewCategory] = useState("");
   const [searchNewCategory, setSearchNewCategory] = useState("");
+  const [searchParentCategory, setSearchParentCategory] = useState("");
   const { classes, cx } = useStyles();
 
   const { categorySelected } = props;
 
   const handleAddNewCategory = (e: any) => {
-    setNewCategory(e.target.value);
     setSearchNewCategory(e.target.value);
   };
+
+  const debounceSearchParentCategory = useCallback(
+    debounce((value) => {
+      if (value.length > 0) {
+        return props.setCategory(
+          props.categories.filter((category) =>
+            category.category_name?.includes(value)
+          )
+        );
+      } else {
+        // Phần này cần xử lý thêm default category
+        return props.setCategory(defaultCategory);
+      }
+    }, 300),
+    [props.categories]
+  );
 
   const handleAddCategory = () => {
     if (
@@ -40,15 +56,23 @@ const SearchCategory = (props: Props) => {
       props.setCategory(
         AddSubList(props.categories, categorySelected, searchNewCategory)
       );
+    } else if (
+      categorySelected[categorySelected.length - 1].category_level === "parent"
+    ) {
+      props.setCategory(
+        AddSubCategory(props.categories, categorySelected, searchNewCategory)
+      );
     }
 
-    console.log(categorySelected);
-
-    props.setListCategory(newCategory);
     setSearchNewCategory("");
   };
 
-  console.log(props.categories);
+  const handleSearchParentCategorySelected = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setSearchParentCategory(e.target.value);
+    debounceSearchParentCategory(e.target.value);
+  };
 
   return (
     <Grid2>
@@ -69,14 +93,18 @@ const SearchCategory = (props: Props) => {
             <div
               className={cx(classes.searchParentCategory, classes.breadcrumbs)}
             >
-              <Breadcrumbs separator="/" aria-label="breadcrumb">
+              <Breadcrumbs
+                separator="/"
+                aria-label="breadcrumb"
+                className={classes.btnActived}
+              >
                 {categorySelected &&
-                  categorySelected.map((categorySelected, index) => {
+                  categorySelected.map((categorySelected) => {
                     if (categorySelected.category_level === "parent") {
                       return (
                         <Button
                           variant="contained"
-                          className={classes.breadcrumbsBtn}
+                          className={cx(classes.breadcrumbsBtn)}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -86,7 +114,7 @@ const SearchCategory = (props: Props) => {
                       return (
                         <Button
                           variant="contained"
-                          className={classes.breadcrumbsBtn}
+                          className={cx(classes.breadcrumbsBtn)}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -96,7 +124,7 @@ const SearchCategory = (props: Props) => {
                       return (
                         <Button
                           variant="contained"
-                          className={classes.breadcrumbsBtn}
+                          className={cx(classes.breadcrumbsBtn)}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -106,28 +134,23 @@ const SearchCategory = (props: Props) => {
                       return (
                         <Button
                           variant="contained"
-                          className={classes.breadcrumbsBtn}
+                          className={cx(classes.breadcrumbsBtn)}
                         >
                           {categorySelected.item_name}
                         </Button>
                       );
                     }
+                    return <></>;
                   })}
               </Breadcrumbs>
-              {!categorySelected.find((selected) => selected.item_name) ? (
-                <Input
-                  disableUnderline={true}
-                  className={cx(classes.search, classes.noBorder)}
-                />
-              ) : (
-                <></>
-              )}
             </div>
           ) : (
             <Input
               disableUnderline={true}
               className={cx(classes.search, classes.searchParentCategory)}
               placeholder="Search for parent category here or select on hierarchy..."
+              value={searchParentCategory}
+              onChange={(e) => handleSearchParentCategorySelected(e)}
             />
           )}
         </div>

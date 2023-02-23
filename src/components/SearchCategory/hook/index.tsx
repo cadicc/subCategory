@@ -62,6 +62,7 @@ export const AddSubList = (
                     category_level: "sublist",
                     product_count: createNum(2),
                     id: createId(30),
+                    items: [],
                   }),
                 }
               : subCategory
@@ -70,3 +71,27 @@ export const AddSubList = (
       : category
   );
 };
+
+export const AddSubCategory = (
+  category: Category[],
+  categorySelected: any[],
+  searchNewCategory: string
+) => {
+  return category.map((category) =>
+    category.category_level === categorySelected[0].category_level &&
+    category.id === categorySelected[0].id &&
+    category.sub_category
+      ? {
+          ...category,
+          sub_category: category.sub_category.concat({
+            category_name: searchNewCategory,
+            category_level: "subcategory",
+            product_count: createNum(2),
+            id: createId(30),
+            sub_list: [],
+          }),
+        }
+      : category
+  );
+};
+

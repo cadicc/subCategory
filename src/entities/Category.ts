@@ -6,6 +6,7 @@ export class Category {
   id?: string;
   category_level?: string;
   sub_category?: SubCategory[];
+  item_name?: string;
 
   constructor(data: any) {
     Object.assign(this, data);

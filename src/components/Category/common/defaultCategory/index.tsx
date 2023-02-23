@@ -84,6 +84,7 @@ export const defaultCategory = [
         product_count: "39",
         id: createId(30),
         category_level: "subcategory",
+        sub_list: [],
       },
     ],
   },
@@ -92,5 +93,6 @@ export const defaultCategory = [
     product_count: "20",
     id: createId(30),
     category_level: "parent",
+    sub_category: [],
   },
 ];

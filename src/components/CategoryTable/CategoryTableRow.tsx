@@ -10,6 +10,7 @@ import Minus from "../../icons/minus";
 import Plus from "../../icons/plus";
 import { Category } from "../../entities/Category";
 import { useStyles } from "./style";
+import Dot from "../../icons/dot";
 
 interface Props {
   categories: Category[];
@@ -19,6 +20,8 @@ interface Props {
 
 const CategoryTableRow = (props: Props) => {
   const [open, setOpen] = useState<any>([]);
+  const [lastIndexOfCategorySelected, setLastIndexOfCategorySelected] =
+    useState("");
 
   const { classes } = useStyles();
 
@@ -31,6 +34,14 @@ const CategoryTableRow = (props: Props) => {
       );
     }
   }, [open, props.categorySelected]);
+
+  useEffect(() => {
+    if (props.categorySelected.length > 0) {
+      setLastIndexOfCategorySelected(
+        props.categorySelected[props.categorySelected.length - 1].id
+      );
+    }
+  }, [props.categorySelected]);
 
   const handleExpand = (e: any, category: any) => {
     if (open.find((id: string) => id === category.id)) {
@@ -63,6 +74,7 @@ const CategoryTableRow = (props: Props) => {
       } else if (category.category_level === "parent") {
         return props.setCategorySelected([]);
       }
+
       props.setCategorySelected(
         props.categorySelected.filter(
           (categorySelected) => categorySelected.id !== category.id
@@ -91,6 +103,7 @@ const CategoryTableRow = (props: Props) => {
       ) {
         return;
       }
+
       props.setCategorySelected([
         ...props.categorySelected,
         {
@@ -118,7 +131,10 @@ const CategoryTableRow = (props: Props) => {
             aria-labelledby="nested-list-subheader"
           >
             {category.category_level === "parent" ? (
-              <ListItemButton onClick={(e) => handleExpand(e, category)}>
+              <ListItemButton
+                onClick={(e) => handleExpand(e, category)}
+                selected={lastIndexOfCategorySelected === category.id}
+              >
                 <div className={classes.categoryParentRow}>
                   <ListItemIcon>
                     {open.find((id: string) => id === category.id) ? (
@@ -148,6 +164,7 @@ const CategoryTableRow = (props: Props) => {
                     <ListItemButton
                       sx={{ pl: 4 }}
                       onClick={(e) => handleExpand(e, subCategory)}
+                      selected={lastIndexOfCategorySelected === subCategory.id}
                     >
                       <div className={classes.subCategoryRow}>
                         <ListItemIcon>
@@ -177,6 +194,9 @@ const CategoryTableRow = (props: Props) => {
                             <ListItemButton
                               sx={{ pl: 8 }}
                               onClick={(e) => handleExpand(e, subList)}
+                              selected={
+                                lastIndexOfCategorySelected === subList.id
+                              }
                             >
                               <div className={classes.subListRow}>
                                 <ListItemIcon>
@@ -209,8 +229,14 @@ const CategoryTableRow = (props: Props) => {
                                     <ListItemButton
                                       sx={{ pl: 18 }}
                                       onClick={(e) => handleExpand(e, item)}
+                                      selected={
+                                        lastIndexOfCategorySelected === item.id
+                                      }
                                     >
                                       <div className={classes.itemtRow}>
+                                        <ListItemIcon>
+                                          <Dot />
+                                        </ListItemIcon>
                                         <ListItemText
                                           primary={item.item_name}
                                         />

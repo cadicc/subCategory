@@ -8,7 +8,6 @@ import { defaultCategory } from "./common/defaultCategory";
 
 const CategoryContainer = () => {
   const { classes } = useStyles();
-  const [listCategory, setListCategory] = useState("");
   const [category, setCategory] = useState<Category[]>(defaultCategory);
   const [categorySelected, setCategorySelected] = useState<Category[]>([]);
 
@@ -19,7 +18,6 @@ const CategoryContainer = () => {
         <div>
           <SearchCategory
             categories={category}
-            setListCategory={setListCategory}
             categorySelected={categorySelected}
             setCategory={setCategory}
           />

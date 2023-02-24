@@ -25,7 +25,7 @@ const SearchCategory = (props: Props) => {
   };
 
   const debounceSearchParentCategory = useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       if (value.length > 0) {
         return props.setCategory(
           props.categories.filter((category) =>

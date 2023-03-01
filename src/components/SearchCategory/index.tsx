@@ -3,7 +3,7 @@ import { useStyles } from "./style";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Breadcrumbs, Button, Input } from "@mui/material";
 import { Category } from "../../entities/Category";
-import { AddItem, AddSubCategory, AddSubList } from "./hook";
+import { hookAddCategory } from "./hook";
 import { debounce } from "lodash";
 import { defaultCategory } from "../Category/common/defaultCategory";
 
@@ -20,52 +20,76 @@ const SearchCategory = (props: Props) => {
 
   const { categorySelected } = props;
 
+  const { addItem, addSubCategory, addSubList, addParentCategory } =
+    hookAddCategory();
+
   const handleAddNewCategory = (e: any) => {
     setSearchNewCategory(e.target.value);
   };
 
-  const debounceSearchParentCategory = useCallback(
-    debounce((value: string) => {
-      if (value.length > 0) {
-        return props.setCategory(
-          props.categories.filter((category) =>
-            category.category_name?.includes(value)
-          )
-        );
-      } else {
-        // Phần này cần xử lý thêm default category
-        return props.setCategory(defaultCategory);
-      }
-    }, 300),
-    [props.categories]
-  );
+  const debounceSearchParentCategory = debounce((value: string) => {
+    if (value.length > 0) {
+      return props.setCategory(
+        props.categories.filter((category) =>
+          category.category_name?.includes(value)
+        )
+      );
+    } else {
+      // Phần này cần xử lý thêm default category
+      return props.setCategory(defaultCategory);
+    }
+  }, 300);
 
-  const handleAddCategory = () => {
-    if (
-      categorySelected[categorySelected.length - 1].category_level ===
-        "sublist" ||
-      categorySelected[categorySelected.length - 1].category_level === "item"
-    ) {
-      props.setCategory(
-        AddItem(props.categories, categorySelected, searchNewCategory)
-      );
-    } else if (
-      categorySelected[categorySelected.length - 1].category_level ===
-      "subcategory"
-    ) {
-      props.setCategory(
-        AddSubList(props.categories, categorySelected, searchNewCategory)
-      );
-    } else if (
-      categorySelected[categorySelected.length - 1].category_level === "parent"
-    ) {
-      props.setCategory(
-        AddSubCategory(props.categories, categorySelected, searchNewCategory)
-      );
+  const handleAddCategory = useCallback(() => {
+    if (searchNewCategory.length > 0) {
+      if (categorySelected.length === 0) {
+        props.setCategory(
+          addParentCategory(props.categories, searchNewCategory)
+        );
+      }
+
+      if (categorySelected.length > 0) {
+        if (
+          categorySelected[categorySelected.length - 1].category_level ===
+            "sublist" ||
+          categorySelected[categorySelected.length - 1].category_level ===
+            "item"
+        ) {
+          props.setCategory(
+            addItem(props.categories, categorySelected, searchNewCategory)
+          );
+        } else if (
+          categorySelected[categorySelected.length - 1].category_level ===
+          "subcategory"
+        ) {
+          props.setCategory(
+            addSubList(props.categories, categorySelected, searchNewCategory)
+          );
+        } else if (
+          categorySelected[categorySelected.length - 1].category_level ===
+          "parent"
+        ) {
+          props.setCategory(
+            addSubCategory(
+              props.categories,
+              categorySelected,
+              searchNewCategory
+            )
+          );
+        }
+      }
     }
 
     setSearchNewCategory("");
-  };
+  }, [
+    searchNewCategory,
+    categorySelected,
+    props,
+    addParentCategory,
+    addItem,
+    addSubList,
+    addSubCategory,
+  ]);
 
   const handleSearchParentCategorySelected = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -105,6 +129,7 @@ const SearchCategory = (props: Props) => {
                         <Button
                           variant="contained"
                           className={cx(classes.breadcrumbsBtn)}
+                          key={categorySelected.id}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -115,6 +140,7 @@ const SearchCategory = (props: Props) => {
                         <Button
                           variant="contained"
                           className={cx(classes.breadcrumbsBtn)}
+                          key={categorySelected.id}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -125,6 +151,7 @@ const SearchCategory = (props: Props) => {
                         <Button
                           variant="contained"
                           className={cx(classes.breadcrumbsBtn)}
+                          key={categorySelected.id}
                         >
                           {categorySelected.category_name}
                         </Button>
@@ -135,6 +162,7 @@ const SearchCategory = (props: Props) => {
                         <Button
                           variant="contained"
                           className={cx(classes.breadcrumbsBtn)}
+                          key={categorySelected.id}
                         >
                           {categorySelected.item_name}
                         </Button>

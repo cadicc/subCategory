@@ -119,7 +119,7 @@ const CategoryTableRow = (props: Props) => {
   return (
     <>
       {props.categories ? (
-        props.categories.map((category) => (
+        props.categories.map((category, index) => (
           <List
             sx={{
               width: "100%",
@@ -129,6 +129,7 @@ const CategoryTableRow = (props: Props) => {
             }}
             component="nav"
             aria-labelledby="nested-list-subheader"
+            key={index}
           >
             {category.category_level === "parent" ? (
               <ListItemButton

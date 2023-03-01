@@ -9,10 +9,10 @@ export const useStyles = makeStyles()(() => {
       color: "2F353D",
       fontSize: 14,
       fontWeight: 700,
-      "& span:first-child": {
+      "& span:first-of-type": {
         width: "70%",
       },
-      "& span:last-child": {
+      "& span:last-of-type": {
         width: "30%",
       },
     },
@@ -36,7 +36,7 @@ export const useStyles = makeStyles()(() => {
       width: "calc(100% - 311px)",
       display: "flex",
       alignItems: "center",
-      "& div:first-child": {
+      "& div:first-of-type": {
         minWidth: 30,
       },
     },

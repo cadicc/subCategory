@@ -1,7 +1,7 @@
 import { Category } from "../../../entities/Category";
 import { createId, createNum } from "../../../helper";
 
-export const AddItem = (
+const addItem = (
   category: Category[],
   categorySelected: any[],
   searchNewCategory: string
@@ -41,7 +41,7 @@ export const AddItem = (
   );
 };
 
-export const AddSubList = (
+const addSubList = (
   category: Category[],
   categorySelected: any[],
   searchNewCategory: string
@@ -72,7 +72,7 @@ export const AddSubList = (
   );
 };
 
-export const AddSubCategory = (
+const addSubCategory = (
   category: Category[],
   categorySelected: any[],
   searchNewCategory: string
@@ -95,3 +95,16 @@ export const AddSubCategory = (
   );
 };
 
+const addParentCategory = (category: Category[], searchNewCategory: string) => {
+  return category.concat({
+    category_level: "parent",
+    category_name: searchNewCategory,
+    id: createId(30),
+    product_count: createNum(2),
+    sub_category: [],
+  });
+};
+
+export const hookAddCategory = () => {
+  return { addItem, addSubList, addSubCategory, addParentCategory };
+};

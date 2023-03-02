@@ -101,6 +101,25 @@ const CategoryTableRow = (props: Props) => {
             cateSelected.category_level === category.category_level
         )
       ) {
+        // console.log(props.categorySelected);
+        // if (
+        //   props.categorySelected[props.categorySelected.length - 1]
+        //     .category_level === "sublist"
+        // ) {
+        //   console.log(
+        //     props.categorySelected.map((cate) =>
+        //       cate.category_level === "sublist"
+        //         ? {
+        //             category_level: category.category_level,
+        //             category_name: category.category_name,
+        //             id: category.id,
+        //             item_name: "",
+        //           }
+        //         : cate
+        //     )
+        //   );
+        //   console.log(category);
+        // }
         return;
       }
 

@@ -10,6 +10,7 @@ const CategoryContainer = () => {
   const { classes } = useStyles();
   const [category, setCategory] = useState<Category[]>(defaultCategory);
   const [categorySelected, setCategorySelected] = useState<Category[]>([]);
+  const [searchCategory, setSearchCategory] = useState("");
 
   return (
     <Grid2 className={classes.categoryContainer}>
@@ -20,12 +21,23 @@ const CategoryContainer = () => {
             categories={category}
             categorySelected={categorySelected}
             setCategory={setCategory}
+            setSearchCategory={setSearchCategory}
           />
-          <CategoryTable
-            categories={category}
-            categorySelected={categorySelected}
-            setCategorySelected={setCategorySelected}
-          />
+          {searchCategory.length === 0 ? (
+            <CategoryTable
+              categories={category}
+              categorySelected={categorySelected}
+              setCategorySelected={setCategorySelected}
+            />
+          ) : (
+            <CategoryTable
+              categories={category.filter((category) =>
+                category.category_name?.includes(searchCategory)
+              )}
+              categorySelected={categorySelected}
+              setCategorySelected={setCategorySelected}
+            />
+          )}
         </div>
       </div>
     </Grid2>

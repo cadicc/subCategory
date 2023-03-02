@@ -5,12 +5,12 @@ import { Breadcrumbs, Button, Input } from "@mui/material";
 import { Category } from "../../entities/Category";
 import { hookAddCategory } from "./hook";
 import { debounce } from "lodash";
-import { defaultCategory } from "../Category/common/defaultCategory";
 
 interface Props {
   categorySelected: any[];
   categories: Category[];
   setCategory: (category: Category[]) => any;
+  setSearchCategory: (value: string) => any;
 }
 
 const SearchCategory = (props: Props) => {
@@ -29,14 +29,9 @@ const SearchCategory = (props: Props) => {
 
   const debounceSearchParentCategory = debounce((value: string) => {
     if (value.length > 0) {
-      return props.setCategory(
-        props.categories.filter((category) =>
-          category.category_name?.includes(value)
-        )
-      );
+      props.setSearchCategory(value);
     } else {
-      // Phần này cần xử lý thêm default category
-      return props.setCategory(defaultCategory);
+      props.setSearchCategory("");
     }
   }, 300);
 
